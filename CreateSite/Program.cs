@@ -12,17 +12,45 @@ namespace CreateSite
     {
         static void Main(string[] args)
         {
-            string TegDescription = @"asdasd";
-            string KeyWords = @"sdfs";
+            string TagDescription = @"some description";
+            string PageParentId = @"37";
 
-            string PathImageDownload = @"C:\Users\LionsGate\Desktop\";
-            string PathPDFDownload = @"C:\Users\LionsGate\Desktop\";
-            string PathTXT = @"C:\Users\LionsGate\Desktop\";
+            string PathImageDownload = @"C:\Users\Антон\Desktop\";
+            string PathPDFDownload = @"C:\Users\Антон\Desktop\";
+            string PathToFile = @"C:\Users\Антон\Desktop\";
+            string PathToLogFile = @"C:\Users\Антон\Desktop\";
 
             string WEB_PathImage = @"Image/stiralnye-mashiny_/";
             string WEB_PathPDF = @"PDF/stiralnye-mashiny_aeg/";
 
+            bool IsWriteToCsv = true;
+            bool IsAppendToFile = true;
+            bool IsWriteLogFile = true;
+
+            string CsvFileName = "Test";
+
             ReadFile ReadSite;
+
+            if (!IsAppendToFile)
+            {
+                Console.WriteLine("Выставленные параметры прдеполагают полную перезапись файла лог-файла. Вы уверены, что хотите перезаписать файлы?\n Если да, то для продолжения нажмите любую кнопку на клавиатуре.");
+                Console.ReadKey();
+            }
+
+            WritePatternCsv WriteSiteCsv = null;
+            try
+            {
+                if (IsWriteToCsv)
+                {
+                    WriteSiteCsv = new WritePatternCsv(PathToFile, CsvFileName, IsAppendToFile);
+                }
+            }
+            catch(Exception exp)
+            {
+                Console.WriteLine("-----------------");
+                Console.WriteLine("ПРИ СОЗДАНИИ .csv ФАЙЛА ПРОИЗОШЛА ОШИБКА:  \n" + exp.ToString());
+                Console.WriteLine("-----------------");
+            }
 
             for (int count = 0; count < args.Length; count++)
             {
@@ -59,9 +87,22 @@ namespace CreateSite
                     Description SiteDescription = new Description(ReadSite);
                     string Description = SiteDescription.GetDescription();
 
-                    Console.WriteLine("Запись в текстовый файл...");
-                    WritePattern WriteSite = new WritePattern(WEB_PathImage, WEB_PathPDF, Title, ImageName, PDFName, TegDescription, KeyWords, SiteDescription);
-                    WriteSite.WritePttern(PathTXT);
+                    if (WriteSiteCsv != null)
+                    {
+                        Console.WriteLine("Запись в текстовый файл (.csv)...");
+                        WriteSiteCsv.AppendLine(Title, WEB_PathImage, WEB_PathPDF, ImageName, PDFName, SiteDescription, TagDescription, PageParentId);
+                        if (IsWriteLogFile)
+                        {
+                            LogFile.WriteLog(Title, PathToLogFile, CsvFileName + "-log", IsAppendToFile);
+                            IsAppendToFile = true;
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("Запись в текстовый файл (.txt)...");
+                        WritePatternTxt WriteSite = new WritePatternTxt(WEB_PathImage, WEB_PathPDF, Title, ImageName, PDFName, SiteDescription);
+                        WriteSite.WriteToFile(PathToFile);
+                    }
                 }
                 catch(Exception exp)
                 {
@@ -71,8 +112,28 @@ namespace CreateSite
                     Console.WriteLine("-----------------");
                 }
             }
+
+            ChangeFileEncoding(PathToFile + CsvFileName + ".csv", Encoding.UTF8, new UTF8Encoding(true));
+
             Console.WriteLine("Нажми на любую кнопку, чтобы закрыть консоль");
             Console.ReadKey();
+        }
+
+        private static bool ChangeFileEncoding(string _fileFullName, Encoding _oldEncoding, Encoding _newEncoding)
+        {
+            try
+            {
+                File.WriteAllText(_fileFullName, File.ReadAllText(_fileFullName, _oldEncoding), _newEncoding);
+                return true;
+            }
+            catch (Exception exp)
+            {
+                Console.WriteLine("-----------------");
+                Console.WriteLine("ПРИ ПЕРЕКОДИРОВКИ .csv ФАЙЛА ПРОИЗОШЛА ОШИБКА:  \n" + exp.ToString());
+                Console.WriteLine("-----------------");
+            }
+
+            return false;
         }
     }
 }

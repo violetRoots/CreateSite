@@ -49,13 +49,15 @@
   <ItemGroup>
     <Compile Include="Description.cs" />
     <Compile Include="Image.cs" />
+    <Compile Include="LogFile.cs" />
     <Compile Include="PDF.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ReadFile.cs" />
     <Compile Include="SourceText.cs" />
     <Compile Include="Title.cs" />
-    <Compile Include="WritePattern.cs" />
+    <Compile Include="WritePatternTxt.cs" />
+    <Compile Include="WritePatternCsv.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
