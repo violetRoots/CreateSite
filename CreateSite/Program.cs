@@ -12,22 +12,21 @@ namespace CreateSite
     {
         static void Main(string[] args)
         {
-            string TagDescription = @"some description";
-            string PageParentId = @"37";
+            string TagDescription = @" инструкция на пылесос. Правила пользования и режимы работы. Скачать руководство по эксплуатации PDF. Настройка и очистка.";
+            string PageParentId = @"0";
 
-            string PathImageDownload = @"C:\Users\Антон\Desktop\";
-            string PathPDFDownload = @"C:\Users\Антон\Desktop\";
-            string PathToFile = @"C:\Users\Антон\Desktop\";
-            string PathToLogFile = @"C:\Users\Антон\Desktop\";
+            string PathImageDownload = @"C:\Users\bigZ\Desktop\TES\";
+            string PathPDFDownload = @"C:\Users\bigZ\Desktop\TES\";
+            string Derictory = @"C:\Users\bigZ\Desktop\TES\";
+            string CsvSiteName = "Content";
+            string CsvAdditionalName = "Additional";
 
-            string WEB_PathImage = @"Image/stiralnye-mashiny_/";
-            string WEB_PathPDF = @"PDF/stiralnye-mashiny_aeg/";
+            string WEB_PathImage = @"Image/all/";
+            string WEB_PathPDF = @"PDF/all/";
 
             bool IsWriteToCsv = true;
             bool IsAppendToFile = true;
             bool IsWriteLogFile = true;
-
-            string CsvFileName = "Test";
 
             ReadFile ReadSite;
 
@@ -38,11 +37,13 @@ namespace CreateSite
             }
 
             WritePatternCsv WriteSiteCsv = null;
+            WritePatternCsv WriteAdditionalCsv = null;
             try
             {
                 if (IsWriteToCsv)
                 {
-                    WriteSiteCsv = new WritePatternCsv(PathToFile, CsvFileName, IsAppendToFile);
+                    WriteSiteCsv = new WritePatternCsv(Derictory, CsvSiteName, IsAppendToFile);
+                    WriteAdditionalCsv = new WritePatternCsv(Derictory, CsvAdditionalName, IsAppendToFile, false);
                 }
             }
             catch(Exception exp)
@@ -87,13 +88,14 @@ namespace CreateSite
                     Description SiteDescription = new Description(ReadSite);
                     string Description = SiteDescription.GetDescription();
 
-                    if (WriteSiteCsv != null)
+                    if (WriteSiteCsv != null && WriteAdditionalCsv != null)
                     {
                         Console.WriteLine("Запись в текстовый файл (.csv)...");
-                        WriteSiteCsv.AppendLine(Title, WEB_PathImage, WEB_PathPDF, ImageName, PDFName, SiteDescription, TagDescription, PageParentId);
+                        WriteSiteCsv.AppendLineToSiteFile(Title, WEB_PathImage, WEB_PathPDF, ImageName, PDFName, SiteDescription, TagDescription, PageParentId);
+                        WriteAdditionalCsv.AppendLineToAdditionalFile(Title, PDFName);
                         if (IsWriteLogFile)
                         {
-                            LogFile.WriteLog(Title, PathToLogFile, CsvFileName + "-log", IsAppendToFile);
+                            LogFile.WriteLog(Title, Derictory, CsvSiteName + "-log", IsAppendToFile);
                             IsAppendToFile = true;
                         }
                     }
@@ -101,7 +103,7 @@ namespace CreateSite
                     {
                         Console.WriteLine("Запись в текстовый файл (.txt)...");
                         WritePatternTxt WriteSite = new WritePatternTxt(WEB_PathImage, WEB_PathPDF, Title, ImageName, PDFName, SiteDescription);
-                        WriteSite.WriteToFile(PathToFile);
+                        WriteSite.WriteToFile(Derictory);
                     }
                 }
                 catch(Exception exp)
@@ -113,7 +115,7 @@ namespace CreateSite
                 }
             }
 
-            ChangeFileEncoding(PathToFile + CsvFileName + ".csv", Encoding.UTF8, new UTF8Encoding(true));
+            ChangeFileEncoding(Derictory + CsvSiteName + ".csv", Encoding.UTF8, new UTF8Encoding(true));
 
             Console.WriteLine("Нажми на любую кнопку, чтобы закрыть консоль");
             Console.ReadKey();
