@@ -15,9 +15,9 @@ namespace CreateSite
             string TagDescription = @" инструкция на пылесос. Правила пользования и режимы работы. Скачать руководство по эксплуатации PDF. Настройка и очистка.";
             string PageParentId = @"0";
 
-            string PathImageDownload = @"C:\Users\bigZ\Desktop\TES\";
-            string PathPDFDownload = @"C:\Users\bigZ\Desktop\TES\";
-            string Derictory = @"C:\Users\bigZ\Desktop\TES\";
+            string PathImageDownload = @"C:\Users\anton\Desktop\TES\";
+            string PathPDFDownload = @"C:\Users\anton\Desktop\TES\";
+            string Derictory = @"C:\Users\anton\Desktop\TES\";
             string CsvSiteName = "Content";
             string CsvAdditionalName = "Additional";
 

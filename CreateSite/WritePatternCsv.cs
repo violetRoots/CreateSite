@@ -51,10 +51,7 @@ namespace CreateSite
         
         public void AppendLineToAdditionalFile(string Name, string PDFName)
         {
-            string AppendLine = @"<p><a href=""https://youmanual.ru/glavnaja-stranica/; ВВВВ/; qqqq/; instrukcija-" + PDFName + @"; /"">" + Name + @"</a></p>";
-            
-            AppendLine = AppendLine.Replace("\n", "");
-            AppendLine = AppendLine.Replace(";", "~~~");
+            string AppendLine = "\n<p><a href=\"https://youmanual.ru/glavnaja-stranica/; ВВВВ/; qqqq/; instrukcija-" + PDFName + @"/"">" + Name + @"</a></p>";
             
             File.AppendAllText(FILE_PATH, AppendLine);
         }
