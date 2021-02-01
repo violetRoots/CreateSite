@@ -15,9 +15,9 @@ namespace CreateSite
             string TagDescription = @" инструкция на пылесос. Правила пользования и режимы работы. Скачать руководство по эксплуатации PDF. Настройка и очистка.";
             string PageParentId = @"0";
 
-            string PathImageDownload = @"C:\Users\anton\Desktop\TES\";
-            string PathPDFDownload = @"C:\Users\anton\Desktop\TES\";
-            string Derictory = @"C:\Users\anton\Desktop\TES\";
+            string PathImageDownload = @"C:\Users\Geralt\Desktop\TES\";
+            string PathPDFDownload = @"C:\Users\Geralt\Desktop\TES\";
+            string Derictory = @"C:\Users\Geralt\Desktop\TES\";
             string CsvSiteName = "Content";
             string CsvAdditionalName = "Additional";
 
@@ -25,7 +25,7 @@ namespace CreateSite
             string WEB_PathPDF = @"PDF/all/";
 
             bool IsWriteToCsv = true;
-            bool IsAppendToFile = true;
+            bool IsAppendToFile = false;
             bool IsWriteLogFile = true;
 
             ReadFile ReadSite;
@@ -63,26 +63,28 @@ namespace CreateSite
                     Console.WriteLine("Поиск названия продукта...");
                     Title SiteTitle = new Title(ReadSite);
                     string Title = SiteTitle.GetTitle();
-                    Console.WriteLine("Название продукта:\n" + Title);
+                    Console.WriteLine($"Название продукта: {Title}");
 
 
                     Console.WriteLine("Поиск ссылки на PDF...");
                     PDF SitePDF = new PDF(ReadSite);
                     string PDFAddress = SitePDF.GetAddress();
-                    Console.WriteLine("Ссылка найдена");
+                    Console.WriteLine($"Ссылка найдена: {PDFAddress}");
                     string PDFName = SitePDF.GetNamePDF();
-                    Console.WriteLine("Имя PDF:\n" + PDFName);
+                    Console.WriteLine($"Имя PDF: {PDFName}.pdf");
                     Console.WriteLine("Скачивание PDF...");
                     SitePDF.DownloadPDF(PathPDFDownload);
+                    Console.WriteLine($"PDF загружен по пути {PathPDFDownload}{PDFName}.pdf");
 
                     Console.WriteLine("Поиск ссылки на картинку...");
                     Image SiteImage = new Image(ReadSite);
                     string ImageAddress = SiteImage.GetAddress();
-                    Console.WriteLine("Ссылка найдена.");
+                    Console.WriteLine($"Ссылка найдена: {ImageAddress}");
                     string ImageName = SiteImage.GetNameImage();
-                    Console.WriteLine("Имя картинки:\n" + ImageName);
+                    Console.WriteLine($"Имя картинки: {ImageName}");
                     Console.WriteLine("Скачивание картинки...");
                     SiteImage.DownloadImage(PathImageDownload);
+                    Console.WriteLine($"Картинка загружена по пути {PathImageDownload}{ImageName}.pdf");
 
                     Console.WriteLine("Считывание таблицы характеристик");
                     Description SiteDescription = new Description(ReadSite);

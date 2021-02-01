@@ -19,7 +19,7 @@ namespace CreateSite
         public Title(ReadFile Origin)
         {
             ORIGIN = Origin;
-            KEY_TITLE_BEGIN = @"<h1 class=""e-h1 sel-product-title"">";
+            KEY_TITLE_BEGIN = @"<h1 class=""fl-h1"">";
             KEY_TITLE_END = @"</h1>";
         }
 
