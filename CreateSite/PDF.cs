@@ -17,15 +17,15 @@ namespace CreateSite
         public PDF(ReadFile ReadSite)
         {
             ORIGIN = ReadSite;
-            KEY_PDF_BEGIN = @"<a class=""download-file-title""";
-            KEY_PDF_END = @"<div class=""download-file-ico"">";
+            KEY_PDF_BEGIN = @"<a _ngcontent-serverapp-c37="""" class=""attachment""";
+            KEY_PDF_END = @"<div _ngcontent-serverapp-c37="""" class=""file-type"">";
         }
 
         //Получить ссылку на файл PDF
         public string GetAddress()
         {
             string IntermediateResult;
-            SourceText.Find(ORIGIN.GetGlobalString(), KEY_PDF_BEGIN, KEY_PDF_END, out IntermediateResult, false, true);
+            SourceText.Find(ORIGIN.GetGlobalString(), KEY_PDF_BEGIN, KEY_PDF_END, out IntermediateResult, false, false);
             SourceText.Find(IntermediateResult, @"href=""", "\"", out ADDRESS);
             return ADDRESS;
         }

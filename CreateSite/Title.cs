@@ -19,8 +19,8 @@ namespace CreateSite
         public Title(ReadFile Origin)
         {
             ORIGIN = Origin;
-            KEY_TITLE_BEGIN = @"<h1 class=""fl-h1"">";
-            KEY_TITLE_END = @"</h1>";
+            KEY_TITLE_BEGIN = @"<h2 _ngcontent-serverapp-c179="""" class=""bar__product-title"">";
+            KEY_TITLE_END = @"</h2>";
         }
 
         //Метод, определяющий, является ли символ буквой английского алфавита

@@ -18,8 +18,8 @@ namespace CreateSite
         public Image(ReadFile ReadSite)
         {
             ORIGIN = ReadSite;
-            KEY_IMAGE_BEGIN = @"<div class=""c-media-container__image-wrapper"">";
-            KEY_IMAGE_END = @"data-holder=""#gtmZoomPhoto"" data-pushable=""true"" data-action=""click"" data-type=""image"">";
+            KEY_IMAGE_BEGIN = @"<img _ngcontent-serverapp-c179="""" sizes=""48px"" loading=""lazy"" class=""bar__product-image""";
+            KEY_IMAGE_END = @"</a>";
         }
 
         //Получить ссылку на картинку
@@ -28,6 +28,7 @@ namespace CreateSite
             string IntermediateRessult, Result;
             SourceText.Find(ORIGIN.GetGlobalString(), KEY_IMAGE_BEGIN, KEY_IMAGE_END, out IntermediateRessult, false, true);
             SourceText.Find(IntermediateRessult, "//", ".jpg", out Result, true, true);
+            Result = Result.Replace("small_pic", "pic");
             return ADDRESS = "http:" + Result;
         }
 

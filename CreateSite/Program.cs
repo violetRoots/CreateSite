@@ -58,9 +58,10 @@ namespace CreateSite
                 try
                 {
                     Console.WriteLine("Получение доступа к html-странице");
-                    ReadSite = new ReadFile(args[count]);
+                ReadSite = new ReadFile(args[count]);
+                //ReadSite = new ReadFile(@"C:\Users\Geralt\Desktop\test.html");
 
-                    Console.WriteLine("Поиск названия продукта...");
+                Console.WriteLine("Поиск названия продукта...");
                     Title SiteTitle = new Title(ReadSite);
                     string Title = SiteTitle.GetTitle();
                     Console.WriteLine($"Название продукта: {Title}");
@@ -112,7 +113,7 @@ namespace CreateSite
                 {
                     Console.WriteLine("-----------------");
                     Console.WriteLine("ЧТО-ТО ПОШЛО НЕ ТАК! ОШИБКА:  \n" + exp.ToString());
-                    Console.WriteLine("ФАЙЛ ПО НОМЕРУ " + (count+1) + " ПРОПУЩЕН");
+                    Console.WriteLine("ФАЙЛ ПО НОМЕРУ " + (count + 1) + " ПРОПУЩЕН");
                     Console.WriteLine("-----------------");
                 }
             }
